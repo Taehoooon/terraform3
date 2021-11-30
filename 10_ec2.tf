@@ -16,23 +16,23 @@ data "aws_ami" "amzn" {
 
 resource "aws_instance" "kim_web" {
     ami = data.aws_ami.amzn.id
-    instance_type = "t2.micro"
-    key_name = "kim-key"
+    instance_type = var.t2m
+    key_name = var.key
     vpc_security_group_ids = [aws_security_group.kim_sg.id]
-    availability_zone = "ap-northeast-2a"
-    private_ip = "10.0.0.11"
-    subnet_id = aws_subnet.kim_puba.id
+    availability_zone = "${var.region}${var.ava_zone[0]}"
+    private_ip = var.pri_web_ip # 필요시 변경
+    subnet_id = aws_subnet.kim_pub[0].id
     user_data = file("./install.sh")
 
     tags = {
-        "Name" = "kim-web"
+        "Name" = "${var.name}-web"
     }
 }
 
 resource "aws_eip" "kim_web_ip" {
     vpc = true
     instance = aws_instance.kim_web.id
-    associate_with_private_ip = "10.0.0.11"
+    associate_with_private_ip = var.pri_web_ip
     depends_on = [aws_internet_gateway.kim_ig]
 }
 

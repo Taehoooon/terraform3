@@ -1,7 +1,7 @@
 resource "aws_lb_target_group" "kim_albtg" {
-    name = "kim-albtg"
-    port = 80
-    protocol = "HTTP"
+    name = "${var.name}-albtg"
+    port = var.port_http
+    protocol = var.HTTP
     vpc_id = aws_vpc.kim_vpc.id
     
     health_check {
@@ -9,9 +9,9 @@ resource "aws_lb_target_group" "kim_albtg" {
         healthy_threshold = 3
         interval = 5
         matcher = "200"
-        path = "/health.html"
+        path = var.health_path
         port = "traffic-port"
-        protocol = "HTTP"
+        protocol = var.HTTP
         timeout = 2
         unhealthy_threshold = 2
     }

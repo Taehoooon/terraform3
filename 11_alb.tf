@@ -1,11 +1,11 @@
 resource "aws_lb" "kim_alb" {
-    name = "kim-alb"
+    name = "${var.name}-alb"
     internal = false
-    load_balancer_type = "application"
+    load_balancer_type = var.lb_type_app
     security_groups = [aws_security_group.kim_sg.id]
-    subnets = [aws_subnet.kim_puba.id, aws_subnet.kim_pubc.id]
+    subnets = [aws_subnet.kim_pub[0].id, aws_subnet.kim_pub[1].id]
     tags = {
-        "Name" = "kim-alb"
+        "Name" = "${var.name}-alb"
     }
 }
 

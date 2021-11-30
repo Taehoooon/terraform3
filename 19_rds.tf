@@ -19,6 +19,6 @@ resource "aws_db_instance" "kim_mydb" {
 }
 
 resource "aws_db_subnet_group" "kim_dbsg" {
-    name = "kim-dbsg"
-    subnet_ids = [aws_subnet.kim_pridba.id,aws_subnet.kim_pridbc.id]
+    name = "${var.name}-dbsg"
+    subnet_ids = [aws_subnet.kim_pridb[0].id,aws_subnet.kim_pridb[1].id]
 }

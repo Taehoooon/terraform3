@@ -1,7 +1,7 @@
 resource "aws_lb_listener" "kim_alblis" {
     load_balancer_arn = aws_lb.kim_alb.arn
-    port = 80
-    protocol = "HTTP"
+    port = var.port_http
+    protocol = var.HTTP
 
     default_action {
         type = "forward"
